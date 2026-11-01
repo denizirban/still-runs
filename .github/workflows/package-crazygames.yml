@@ -1,0 +1,22 @@
+name: Package CrazyGames
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "index.html"
+      - "package.sh"
+      - ".github/workflows/package-crazygames.yml"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Package standalone HTML5 game
+        run: sh package.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: still-runs-crazygames-upload
+          path: dist/still-runs-crazygames.zip
+          if-no-files-found: error
+          retention-days: 30
